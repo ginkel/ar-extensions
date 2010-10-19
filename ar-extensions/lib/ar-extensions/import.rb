@@ -188,7 +188,7 @@ class ActiveRecord::Base
       # add support for composite primary keys: check that the set of
       # primary key(s) (converted to symbols) is a subset of the
       # columns being imported, as symbols -jorahood
-      if ![primary_key].flatten.*.to_sym.to_set.subset?(column_names.*.to_sym.to_set) &&
+      if ![primary_key].flatten.map{|key| key.to_sym}.to_set.subset?(column_names.map{|col| col.to_sym}.to_set) &&
           sequence_name && connection.prefetch_primary_key?
          column_names << primary_key
          array_of_attributes.each { |a| a << nil }
